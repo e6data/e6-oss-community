@@ -1,6 +1,6 @@
 variable "source_network" {
-  type       = string
-  descrition = "the network having hive configured"
+  type        = string
+  description = "the network having hive configured"
 }
 variable "destination_network" {
   type        = string

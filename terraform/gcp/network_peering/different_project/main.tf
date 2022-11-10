@@ -1,20 +1,19 @@
-data "google_compute_network" "source_vpc" {
+data "google_compute_network" "source_network" {
   project = var.source_project
-  name    = var.source_vpc
+  name    = var.source_network
 }
-data "google_compute_network" "destination_vpc" {
+data "google_compute_network" "destination_network" {
   project = var.destination_project
-  name    = var.destination_vpc
+  name    = var.destination_network
 }
 resource "google_compute_network_peering" "source_to_destination" {
-  name         = "source_to_destination"
-  network      = data.google_compute_network.source_vpc.self_link
-  peer_network = data.google_compute_network.destination_vpc.self_link
+  name         = "source-to-destination-peering"
+  network      = data.google_compute_network.source_network.self_link
+  peer_network = data.google_compute_network.destination_network.self_link
 }
 
 resource "google_compute_network_peering" "destination_to_source" {
-  name         = "destination_to_source"
-  network      = data.google_compute_network.destination_vpc.self_link
-  peer_network = data.google_compute_network.source_vpc.self_link
-
+  name         = "destination-to-source-peering"
+  network      = data.google_compute_network.destination_network.self_link
+  peer_network = data.google_compute_network.source_network.self_link
 }
