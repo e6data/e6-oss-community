@@ -1,4 +1,3 @@
-
 variable "source_vpc" {
   type       = string
   descrition = "the VPC having hive configured"
