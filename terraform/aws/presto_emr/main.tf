@@ -1,4 +1,3 @@
-### https://www.linkedin.com/pulse/aws-emr-cluster-automation-using-concourse-terraform-pravin-dwiwedi?trk=read_related_article-card_title
 
 resource "aws_emr_cluster" "cluster" {
   name          = "${var.cluster_name}-${var.uuid}"
