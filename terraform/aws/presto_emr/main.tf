@@ -44,6 +44,6 @@ resource "aws_emr_cluster" "cluster" {
 #   emr_managed_master_security_group = aws_security_group.sg.id
 #   emr_managed_slave_security_group  = aws_security_group.sg.id
    instance_profile                  = "arn:aws:iam::${var.aws_account_id}:instance-profile/EMR_EC2_DefaultRole"
-#    key_name = "e6-perf-dev"
+#    key_name = "dev"
  }
 }
