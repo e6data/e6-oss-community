@@ -5,7 +5,7 @@ resource "aws_vpc_peering_connection" "peer" {
   vpc_id        = var.destination_vpc
   peer_vpc_id   = var.source_vpc
   peer_owner_id = data.aws_caller_identity.current.account_id
-  peer_region   = var.accept_region
+  peer_region   = var.source_region
   auto_accept   = false
 
   tags = {

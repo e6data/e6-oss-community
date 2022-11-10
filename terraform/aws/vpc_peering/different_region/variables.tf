@@ -1,6 +1,6 @@
 variable "source_vpc" {
-  type       = string
-  descrition = "the VPC having hive configured"
+  type        = string
+  description = "the VPC having hive configured"
 }
 variable "destination_vpc" {
   type        = string
