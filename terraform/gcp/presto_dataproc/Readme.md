@@ -43,3 +43,5 @@ Please make sure to update tests as appropriate.
 ## References
 
 [GCP Dataproc](https://cloud.google.com/dataproc)
+[TERRAFORM BEST PRACTICES](https://cloud.google.com/docs/terraform/best-practices-for-terraform)
+[PRESTO DATAPROC](https://cloud.google.com/dataproc/docs/tutorials/presto-dataproc)
