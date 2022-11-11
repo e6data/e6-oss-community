@@ -6,14 +6,14 @@
 
 Use the below variables for AWS hive metastore.
 
-Go to [here](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/aws/hive_metastore/) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
+Execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 ### Variables
 
 ```bash
 vpc_id = "<vpc id for hive metastore>"
 instance_type = "<instance type eg. t3.micro>"
-instance_profile_arn = "<instance profike arn>"
+instance_profile_arn = "<instance profike arn>" ### EC2 instance profile with S3 read only access
 ```
 
 ### Execution commands
