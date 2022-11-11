@@ -32,6 +32,10 @@ terraform init
 terraform plan 
 terraform apply
 ```
+### Cleanup commands
+```bash
+terraform destroy 
+```
 
 ## Contributing
 
