@@ -2,7 +2,10 @@ variable "region" {
   type        = string
   description = "GCP Region"
 }
-
+variable "project" {
+  type        = string
+  description = "GCP Project ID"
+}
 variable "network" {
   type        = string
   description = "GCP VPC"

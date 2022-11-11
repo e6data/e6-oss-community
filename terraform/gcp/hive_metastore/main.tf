@@ -26,7 +26,7 @@ resource "google_compute_instance" "metastore" {
     subnetwork = var.subnetwork
     access_config {}
   }
-
+  metadata_startup_script = file("bootstrap_script.sh")
   boot_disk {
     auto_delete = true
     initialize_params {
