@@ -48,4 +48,6 @@ resource "aws_instance" "metastore_instance" {
     volume_type           = "gp2"
     delete_on_termination = true
   }
+  user_data = file("bootstrap_script.sh")
+
 }

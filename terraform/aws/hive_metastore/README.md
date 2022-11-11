@@ -5,6 +5,9 @@
 
 Use the below variables for AWS hive metastore.
 
+
+The Hive metastore is configured using the bootstrap script in terraform/aws/hive_metastore/bootstrap_script.sh.
+
 Execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 ### Variables
