@@ -1,15 +1,15 @@
 
 resource "aws_emr_cluster" "cluster" {
-  name          = "${var.cluster_name}-${var.uuid}"
-  release_label = "emr-6.8.0"
-  applications  = ["Presto"]
-  configurations_json = templatefile("${path.module}/configuration.json.tpl", {hive_host = var.hive_host,hive_port = var.hive_port})
+  name                = "${var.cluster_name}-${var.uuid}"
+  release_label       = "emr-6.8.0"
+  applications        = ["Presto"]
+  configurations_json = templatefile("${path.module}/configuration.json.tpl", { hive_host = var.hive_host, hive_port = var.hive_port })
 
   termination_protection            = false
   keep_job_flow_alive_when_no_steps = true
 
   master_instance_group {
-    instance_type = "r5.2xlarge"
+    instance_type = var.master_instance_type
 
     ebs_config {
       size                 = "100"
@@ -19,7 +19,7 @@ resource "aws_emr_cluster" "cluster" {
   }
 
   core_instance_group {
-    instance_type  = "r5.8xlarge"
+    instance_type  = var.core_instance_type
     instance_count = tonumber(var.instance_count)
 
     ebs_config {
@@ -40,10 +40,10 @@ resource "aws_emr_cluster" "cluster" {
   service_role = "arn:aws:iam::${var.aws_account_id}:role/EMR_DefaultRole"
 
   ec2_attributes {
-#   subnet_id                         = aws_subnet.main.id
-#   emr_managed_master_security_group = aws_security_group.sg.id
-#   emr_managed_slave_security_group  = aws_security_group.sg.id
-   instance_profile                  = "arn:aws:iam::${var.aws_account_id}:instance-profile/EMR_EC2_DefaultRole"
-#    key_name = "dev"
- }
+    #   subnet_id                         = aws_subnet.main.id
+    #   emr_managed_master_security_group = aws_security_group.sg.id
+    #   emr_managed_slave_security_group  = aws_security_group.sg.id
+    instance_profile = "arn:aws:iam::${var.aws_account_id}:instance-profile/EMR_EC2_DefaultRole"
+    #    key_name = "dev"
+  }
 }
