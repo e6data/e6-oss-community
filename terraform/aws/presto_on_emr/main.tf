@@ -1,4 +1,3 @@
-
 resource "aws_emr_cluster" "cluster" {
   name                = "${var.emr_name}-${var.uuid}"
   release_label       = "emr-6.8.0"

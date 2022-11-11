@@ -6,6 +6,8 @@
 
 Use the below configs for GCP hive metastore.
 
+The Hive metastore is configured using the bootstrap script in terraform/gcp/hive_metastore/bootstrap_script.sh.
+
 Go to [same_region](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/hive_metastore/) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 ### Variables

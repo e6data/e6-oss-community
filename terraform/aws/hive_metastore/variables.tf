@@ -17,3 +17,7 @@ variable "metastore_port" {
   type    = number
   default = 9083
 }
+variable "region" {
+  type    = string
+  default = "us-east-1"
+}

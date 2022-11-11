@@ -46,5 +46,7 @@ Please make sure to update tests as appropriate.
 ## References
 
 [AWS EMR](https://aws.amazon.com/emr/)
+
 [TERRAFORM BEST PRACTICES](https://spacelift.io/blog/terraform-tutorial)
+
 [PRESTO EMR](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-presto.html)
