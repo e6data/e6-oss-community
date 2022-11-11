@@ -31,9 +31,9 @@ variable "dataproc_port" {
   description = "Hive metastore Port"
   default     = "8060"
 }
-variable "cluster_name" {
+variable "dataproc_name" {
   type        = string
-  description = "EMR Cluster Name"
+  description = "Dataproc Cluster Name"
 }
 
 variable "uuid" {

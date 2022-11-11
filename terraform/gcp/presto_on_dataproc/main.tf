@@ -1,12 +1,11 @@
 resource "google_dataproc_cluster" "cluster" {
-  name                          = "${var.cluster_name}-${var.uuid}"
+  name                          = "${var.dataproc_name}-${var.uuid}"
   region                        = var.region
   graceful_decommission_timeout = "120s"
   labels = {
     cluster      = "presto"
-    cluster_name = var.cluster_name
+    cluster_name = var.dataproc_name
   }
-
 
   cluster_config {
 
@@ -52,7 +51,7 @@ resource "google_dataproc_cluster" "cluster" {
 
     gce_cluster_config {
       subnetwork = var.subnetwork
-      tags       = [var.cluster_name]
+      tags       = [var.dataproc_name]
       service_account_scopes = [
         "storage-ro"
       ]
@@ -60,26 +59,26 @@ resource "google_dataproc_cluster" "cluster" {
   }
 }
 
-resource "google_compute_firewall" "presto-dataproc" {
-  name          = "${var.cluster_name}-${var.uuid}"
-  network       = var.network
-  source_tags   = [var.cluster_name]
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = [var.cluster_name]
-  allow {
-    protocol = "TCP"
-    ports    = [var.dataproc_port]
-  }
-}
-
 /// This resource is needed to access dataproc via cli
 
-# resource "google_compute_firewall" "presto-dataproc-internal" {
-#   name          = "${var.cluster_name}-${var.uuid}-internal"
+# resource "google_compute_firewall" "presto-dataproc" {
+#   name          = "${var.dataproc_name}-${var.uuid}"
 #   network       = var.network
-#   source_tags   = [var.cluster_name]
+#   source_tags   = [var.dataproc_name]
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags   = [var.dataproc_name]
+#   allow {
+#     protocol = "TCP"
+#     ports    = [var.dataproc_port]
+#   }
+# }
+
+# resource "google_compute_firewall" "presto-dataproc-internal" {
+#   name          = "${var.dataproc_name}-${var.uuid}-internal"
+#   network       = var.network
+#   source_tags   = [var.dataproc_name]
 #   source_ranges = [data.google_compute_subnetwork.subnetwork_cidr.ip_cidr_range]
-#   target_tags   = [var.cluster_name]
+#   target_tags   = [var.dataproc_name]
 #   priority      = 65534
 #   allow {
 #     protocol = "TCP"

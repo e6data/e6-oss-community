@@ -12,7 +12,7 @@ variable "hive_port" {
   description = "Hive metastore Port"
   default     = "9083"
 }
-variable "cluster_name" {
+variable "emr_name" {
   type        = string
   description = "EMR Cluster Name"
 }

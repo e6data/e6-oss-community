@@ -1,8 +1,0 @@
-hive_host = "<ip on which hive host is running>"
-hive_port = "<port on which hive host is running>"
-cluster_name = "<name of the emr cluster>"
-uuid = "<unique identifier eg. 111222>"
-instance_count = "<the count of core instance>"
-aws_account_id = "<account if for the aws account>"
-enable_spot = "<for enabling the spot instance>"
-bid_price = "<Bid price for each EC2 Spot instance>"
