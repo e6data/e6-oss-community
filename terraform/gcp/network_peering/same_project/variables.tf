@@ -4,7 +4,7 @@ variable "source_network" {
 }
 variable "destination_network" {
   type        = string
-  description = "the network having e6 engine configured"
+  description = "the network having engine configured"
 }
 variable "project" {
   type        = string

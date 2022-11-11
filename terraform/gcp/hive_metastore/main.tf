@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "metastore_firewall" {
   name          = "hive-metastore-firewall"
-  network       = data.google_compute_network.e6_network.self_link
+  network       = data.google_compute_network.metastore_network.self_link
   source_tags   = ["metastore"]
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["metastore"]
