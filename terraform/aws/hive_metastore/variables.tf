@@ -1,15 +1,19 @@
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "VPC ID"
 }
 
 variable "instance_type" {
-  type = string
+  type        = string
   description = "instance type"
-  default = "t3.medium"
+  default     = "t3.medium"
 }
 
 variable "instance_profile_arn" {
-  type = string
+  type    = string
   default = "arn:aws:iam::123456789012:instance-profile/role-name"
+}
+variable "metastore_port" {
+  type    = number
+  default = 9083
 }
