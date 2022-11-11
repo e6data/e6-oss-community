@@ -22,6 +22,10 @@ terraform init
 terraform plan -var-file="terraform.tfvars"
 terraform apply
 ```
+### Cleanup commands
+```bash
+terraform destroy 
+```
 
 ## Contributing
 

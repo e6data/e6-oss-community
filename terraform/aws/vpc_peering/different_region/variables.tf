@@ -4,7 +4,7 @@ variable "source_vpc" {
 }
 variable "destination_vpc" {
   type        = string
-  description = "the VPC having e6 engine configured"
+  description = "the VPC having engine configured"
 }
 variable "source_region" {
   type        = string

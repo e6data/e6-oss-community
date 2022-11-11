@@ -1,18 +1,22 @@
 variable "region" {
-  type = string
+  type        = string
   description = "GCP Region"
 }
 
 variable "network" {
-  type = string
+  type        = string
   description = "GCP VPC"
 }
 
 variable "subnetwork" {
   description = "Self link of subnetwork"
-#  default     = "{{subnetwork}}"
+  #  default     = "{{subnetwork}}"
 }
 variable "instance_type" {
-  type = string
+  type        = string
   description = "machine type"
+}
+variable "metastore_port" {
+  type    = string
+  default = "9083"
 }

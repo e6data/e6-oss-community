@@ -8,5 +8,5 @@ data "google_compute_network" "metastore_network" {
 }
 
 data "google_compute_zones" "zones" {
-  region    = var.region
+  region = var.region
 }
