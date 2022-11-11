@@ -1,6 +1,6 @@
 
 resource "aws_emr_cluster" "cluster" {
-  name                = "${var.cluster_name}-${var.uuid}"
+  name                = "${var.emr_name}-${var.uuid}"
   release_label       = "emr-6.8.0"
   applications        = ["Presto"]
   configurations_json = templatefile("${path.module}/configuration.json.tpl", { hive_host = var.hive_host, hive_port = var.hive_port })
