@@ -4,9 +4,9 @@
 
 ## AWS
 
-Use the below configs for AWS hive metastore.
+Use the below variables for AWS hive metastore.
 
-Go to [same_region](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/aws/hive_metastore/) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
+Go to [here](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/aws/hive_metastore/) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 ### Variables
 
