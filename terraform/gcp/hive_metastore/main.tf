@@ -1,15 +1,3 @@
-resource "google_compute_firewall" "metastore_firewall" {
-  name          = "hive-metastore-firewall"
-  network       = data.google_compute_network.metastore_network.self_link
-  source_tags   = ["metastore"]
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["metastore"]
-  allow {
-    protocol = "TCP"
-    ports    = [var.metastore_port]
-  }
-}
-
 data "google_compute_image" "my_image" {
   family  = "centos-7"
   project = "centos-cloud"
