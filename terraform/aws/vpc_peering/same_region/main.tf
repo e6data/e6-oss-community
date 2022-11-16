@@ -24,3 +24,14 @@ resource "aws_vpc_peering_connection_options" "peer" {
   }
 }
 
+resource "aws_route" "source" {
+  route_table_id            = data.aws_vpc.source.main_route_table_id
+  destination_cidr_block    = data.aws_vpc.destination.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+}
+resource "aws_route" "destination" {
+  route_table_id            = data.aws_vpc.destination.main_route_table_id
+  destination_cidr_block    = data.aws_vpc.source.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+}
+
