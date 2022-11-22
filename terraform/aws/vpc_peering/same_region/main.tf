@@ -5,6 +5,12 @@ data "aws_vpc" "source" {
 data "aws_vpc" "destination" {
   id = var.destination_vpc
 }
+data "aws_route_tables" "source" {
+  vpc_id = var.source_vpc
+}
+data "aws_route_tables" "destination" {
+  vpc_id = var.destination_vpc
+}
 
 resource "aws_vpc_peering_connection" "peer" {
   vpc_id      = data.aws_vpc.source.id
@@ -25,13 +31,14 @@ resource "aws_vpc_peering_connection_options" "peer" {
 }
 
 resource "aws_route" "source" {
-  route_table_id            = data.aws_vpc.source.main_route_table_id
+  count                     = length(data.aws_route_tables.source.ids)
+  route_table_id            = tolist(data.aws_route_tables.source.ids)[count.index]
   destination_cidr_block    = data.aws_vpc.destination.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
 resource "aws_route" "destination" {
-  route_table_id            = data.aws_vpc.destination.main_route_table_id
+  count                     = length(data.aws_route_tables.destination.ids)
+  route_table_id            = tolist(data.aws_route_tables.destination.ids)[count.index]
   destination_cidr_block    = data.aws_vpc.source.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
-

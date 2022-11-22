@@ -10,3 +10,4 @@ variable "region" {
   type        = string
   description = "the region with VPC"
 }
+
