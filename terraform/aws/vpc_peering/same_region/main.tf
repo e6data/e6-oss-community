@@ -5,17 +5,21 @@ data "aws_vpc" "source" {
 data "aws_vpc" "destination" {
   id = var.destination_vpc
 }
-data "aws_route_table" "rt" {
+data "aws_route_table" "pvt" {
   vpc_id = var.destination_vpc
-
   filter {
     name   = "tag:aws:cloudformation:logical-id"
     values = ["e6pvtRouteTable"]
   }
 }
-output "filter" {
-  value = data.aws_route_table.rt.id
+data "aws_route_table" "pub" {
+  vpc_id = var.destination_vpc
+  filter {
+    name   = "tag:aws:cloudformation:logical-id"
+    values = ["e6pubRouteTable"]
+  }
 }
+
 resource "aws_vpc_peering_connection" "peer" {
   vpc_id      = data.aws_vpc.source.id
   peer_vpc_id = data.aws_vpc.destination.id
@@ -35,12 +39,17 @@ resource "aws_vpc_peering_connection_options" "peer" {
 }
 
 resource "aws_route" "source" {
-  route_table_id            = data.aws_vpc.source.main_route_table_id
+  route_table_id            = "rtb-08fe04cd7a905a9bd"
   destination_cidr_block    = data.aws_vpc.destination.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
-resource "aws_route" "destination" {
-  route_table_id            = data.aws_route_table.rt.id
+resource "aws_route" "destination-pvt" {
+  route_table_id            = data.aws_route_table.pvt.id
+  destination_cidr_block    = data.aws_vpc.source.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+}
+resource "aws_route" "destination-pub" {
+  route_table_id            = data.aws_route_table.pub.id
   destination_cidr_block    = data.aws_vpc.source.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }

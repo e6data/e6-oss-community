@@ -10,3 +10,8 @@ variable "region" {
   type        = string
   description = "the region with VPC"
 }
+
+variable "route_table_id" {
+  type        = string
+  description = "The route table associated with subnet in which the hive metastore is present"
+}
