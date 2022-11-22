@@ -6,9 +6,9 @@ data "aws_vpc" "destination" {
   id = var.destination_vpc
 }
 data "aws_route_tables" "source" {
-  vpc_id = var.destination_vpc
+  vpc_id = var.source_vpc
 }
-data "aws_route_table" "destination" {
+data "aws_route_tables" "destination" {
   vpc_id = var.destination_vpc
 }
 
