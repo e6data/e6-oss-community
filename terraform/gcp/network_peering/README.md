@@ -3,7 +3,14 @@
 
 VPC Network Peering enables you to connect VPC networks so that workloads in different VPC networks can communicate internally. Traffic stays within Cloud's network and doesn't traverse the public internet.
 
+IAM permissions for creating and deleting VPC Network Peering are included as part of the Compute Network Admin (roles/compute.networkAdmin) and permissions to edit the cloud function is included in the (roles/cloudfunctions.admin) role.
+
 ## GCP
+
+The cloud function does not have a network attached to it by default. The VPC network peering betweeen the meta function and the  hive metastore is possible if we have a subnetwork attached to the meta function.
+
+We can use a Serverless VPC Access connector to connect the cloud function directly to a Virtual Private Cloud (VPC) network, allowing access to cloud function with an internal IP address.
+
 
 Use the below configs for GCP peering.
 
@@ -12,19 +19,34 @@ Use the below configs for GCP peering.
 Go to [same_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/same_project)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 
-### Different project for networks
+### terraform tfvars file
+Note: For the variable serverless_subnet_cidr
 
-Go to [different_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/different_project) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
+1)IP range must be an unused /28 CIDR range in the same VPC network, such as 10.8.0.0/28. i.e.,mask must be 28.
+
+2)Ensure that the range does not overlap with an existing subnet. 
+
+
+```bash
+source_network         = <source_network>              //The vpc having hive configured
+destination_network    = <destination network>         //The vpc having engine configured
+project                = <project>                     //The project in which hive and engine is configured
+workspace_name         = <workspace_name>              //The name of the e6data workspace
+serverless_subnet_cidr = <serverless_subnet_cidr>      //cidr range for the serverless vpc
+```
 
 ### Execution commands
+
+The meta function must be imported to be managed by the terraform to edit the function and attach serverless VPC to it. Please make sure to replace the {workspace-name} with your own e6data workspace name. 
 ```bash
 terraform init
-terraform plan -var-file="terraform.tfvars"
-terraform apply
+terraform import google_cloudfunctions_function.meta-function e6data-{workspace-name}-meta
+terraform plan 
+terraform apply -var action="create"
 ```
 ### Cleanup commands
 ```bash
-terraform destroy 
+terraform apply -var action="destroy" 
 ```
 
 ## Contributing
