@@ -43,6 +43,8 @@ Go to [same_region](https://github.com/e6x-labs/e6-oss-community/tree/main/terra
 
 Go to [different_region](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/aws/vpc_peering/different_region) and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
+Vpc peering for different region might take 3-4 minutes to get active after running the terraform code.
+
 Note : Make sure that the cluster and the data on which you query is in the same region.
 
 ### Execution commands
