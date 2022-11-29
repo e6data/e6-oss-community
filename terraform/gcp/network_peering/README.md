@@ -3,7 +3,7 @@
 
 VPC Network Peering enables you to connect VPC networks so that workloads in different VPC networks can communicate internally. Traffic stays within Cloud's network and doesn't traverse the public internet.
 
-IAM permissions for creating and deleting VPC Network Peering are included as part of the Compute Network Admin (roles/compute.networkAdmin) and permissions to edit the cloud function is included in the (roles/cloudfunctions.admin) role.
+IAM permissions for creating and deleting VPC Network Peering are included as part of the Compute Network Admin (roles/compute.networkAdmin), permissions to create serverless vpc is included in (roles/vpcaccess.user) and permissions to edit the cloud function is included in the (roles/cloudfunctions.admin) role.
 
 ## GCP
 

@@ -1,9 +1,8 @@
-##hive metastore default port 9083
 #!/bin/bash
-sudo yum update -y;
-sudo yum install -y mariadb-server java-1.8.0-openjdk wget;
-sudo systemctl start mariadb;
-sudo systemctl enable mariadb;
+sudo yum update -y
+sudo yum install -y mariadb-server java-1.8.0-openjdk wget
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
 
 sudo bash -c "cat << EOF | sudo tee -a my.sql
 UPDATE mysql.user SET Password=PASSWORD('root') WHERE User='root';
