@@ -50,8 +50,8 @@ Note : Make sure that the cluster and the data on which you query is in the same
 ### Execution commands
 ```bash
 terraform init
-terraform plan -var-file="terraform.tfvars"
-terraform apply
+terraform plan -var-file="terraform.tfvars" --out="e6.plan"
+terraform apply "e6.plan"
 ```
 ### Cleanup commands
 ```bash
