@@ -5,15 +5,16 @@ VPC Network Peering enables you to connect VPC networks so that workloads in dif
 
 ## AWS
 
--In this terraform code, the routes are being modified in the main route table of the VPC. The user should make sure that the private subnet is attached to the main route table.
+-In this terraform code, the routes are being modified in the route table of both the VPC's(Source and destination). The user should make sure that the private subnet is associated with a route table.
 Use the below configs for AWS peering.
 
--By default, IAM users cannot create or modify VPC peering connections. To grant access to VPC peering resources, attach the below IAM policy to an IAM identity, such as a user, group, or role.
+-To grant access to VPC peering resources, attach the below IAM policy to an IAM identity, such as a user, group, or role.
 ```bash
 {
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
                 "ec2:AcceptVpcPeeringConnection",
@@ -26,7 +27,10 @@ Use the below configs for AWS peering.
                 "ec2:ModifyVpcPeeringConnectionOptions",
                 "ec2:ReplaceRoute",
                 "ec2:ReplaceRouteTableAssociation",
-                "ec2:DescribeVpcAttribute"
+                "ec2:DescribeVpcAttribute",
+                "ec2:DeleteRoute",
+                "ec2:DeleteVpcPeeringConnection",
+                "ec2:CreateTags"
             ],
             "Resource": "*"
         }
