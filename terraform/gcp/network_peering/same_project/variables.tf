@@ -22,3 +22,8 @@ variable "serverless_subnet_cidr" {
   type        = string
   description = "cidr range for the serverless subnet"
 }
+
+variable "region" {
+  type        = string
+  description = "GCP region"
+}
