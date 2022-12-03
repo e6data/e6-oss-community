@@ -14,17 +14,16 @@ We can use a Serverless VPC Access connector to connect the cloud function direc
 
 Use the below configs for GCP peering.
 
-### Same project for both networks
+### Networks in same project
 
 Go to [same_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/same_project)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 
 ### terraform tfvars file
-Note: For the variable serverless_subnet_cidr
-
-1)IP range must be an unused /28 CIDR range in the same VPC network, such as 10.8.0.0/28. i.e.,mask must be 28.
-
-2)Ensure that the range does not overlap with an existing subnet. 
+Note:
+* For the variable serverless_subnet_cidr
+    * IP range must be an unused /28 CIDR range in the same VPC network, such as 10.8.0.0/28. i.e.,mask must be 28.
+    * Ensure that the range does not overlap with an existing subnet. 
 
 
 ```bash
@@ -37,7 +36,7 @@ serverless_subnet_cidr = <serverless_subnet_cidr>      //cidr range for the serv
 
 ### Execution commands
 
-The meta function must be imported to be managed by the terraform to edit the function and attach serverless VPC to it. Please make sure to replace the {workspace-name} with your own e6data workspace name. 
+The meta function must be imported to be managed by the terraform to edit the function and attach serverless VPC to it. Please make sure to **replace the {workspace-name}** with your own e6data workspace name. 
 ```bash
 terraform init
 terraform import google_cloudfunctions_function.meta-function e6data-{workspace-name}-meta
