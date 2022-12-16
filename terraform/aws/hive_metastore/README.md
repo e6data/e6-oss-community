@@ -3,6 +3,8 @@
 
 ## AWS
 
+-To use Terraform to manage and deploy resources and infrastructure to AWS, you will need to use the AWS provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp AWS Provider team. You can follow one of the methods mentioned in this [document](https://spacelift.io/blog/terraform-aws-provider).
+
 Use the below variables for AWS hive metastore.
 
 
