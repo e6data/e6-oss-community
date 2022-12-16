@@ -3,6 +3,7 @@
 
 
 ## GCP
+To use Terraform to manage and deploy resources and infrastructure to GCP, you will need to use the GCP provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp GCP Provider team. You can follow one of the methods mentioned in this [Documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference).
 
 Use the below configs for GCP hive metastore.
 
