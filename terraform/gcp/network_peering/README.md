@@ -7,6 +7,9 @@ IAM permissions for creating and deleting VPC Network Peering are included as pa
 
 ## GCP
 
+To use Terraform to manage and deploy resources and infrastructure to GCP, you will need to use the GCP provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp GCP Provider team. You can follow one of the methods mentioned in this [Documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference).
+
+
 The cloud function does not have a network attached to it by default. The VPC network peering betweeen the meta function and the  hive metastore is possible if we have a subnetwork attached to the meta function.
 
 We can use a Serverless VPC Access connector to connect the cloud function directly to a Virtual Private Cloud (VPC) network, allowing access to cloud function with an internal IP address.
@@ -14,17 +17,16 @@ We can use a Serverless VPC Access connector to connect the cloud function direc
 
 Use the below configs for GCP peering.
 
-### Same project for both networks
+### Networks in same project
 
 Go to [same_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/same_project)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 
 ### terraform tfvars file
-Note: For the variable serverless_subnet_cidr
-
-1)IP range must be an unused /28 CIDR range in the same VPC network, such as 10.8.0.0/28. i.e.,mask must be 28.
-
-2)Ensure that the range does not overlap with an existing subnet. 
+Note:
+* For the variable serverless_subnet_cidr
+    * IP range must be an unused /28 CIDR range in the same VPC network, such as 10.8.0.0/28. i.e.,mask must be 28.
+    * Ensure that the range does not overlap with an existing subnet. 
 
 
 ```bash
@@ -37,7 +39,7 @@ serverless_subnet_cidr = <serverless_subnet_cidr>      //cidr range for the serv
 
 ### Execution commands
 
-The meta function must be imported to be managed by the terraform to edit the function and attach serverless VPC to it. Please make sure to replace the {workspace-name} with your own e6data workspace name. 
+The meta function must be imported to be managed by the terraform to edit the function and attach serverless VPC to it. Please make sure to **replace the {workspace-name}** with your own e6data workspace name. 
 ```bash
 terraform init
 terraform import google_cloudfunctions_function.meta-function e6data-{workspace-name}-meta
