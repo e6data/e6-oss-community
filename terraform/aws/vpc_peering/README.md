@@ -5,7 +5,7 @@ VPC Network Peering enables you to connect VPC networks so that workloads in dif
 
 ## AWS
 
--To use Terraform to manage and deploy resources and infrastructure to AWS, you will need to use the AWS provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp AWS Provider team. You can follow one of the methods mentioned in this [document](https://linktodocumentation).
+-To use Terraform to manage and deploy resources and infrastructure to AWS, you will need to use the AWS provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp AWS Provider team. You can follow one of the methods mentioned in this [document](https://spacelift.io/blog/terraform-aws-provider).
 
 -In this terraform code, the routes are being modified in the route table of both the VPC's(Source and destination). The user should make sure that the private subnet is associated with a route table.
 Use the below configs for AWS peering.
