@@ -7,6 +7,9 @@ IAM permissions for creating and deleting VPC Network Peering are included as pa
 
 ## GCP
 
+To use Terraform to manage and deploy resources and infrastructure to GCP, you will need to use the GCP provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp GCP Provider team. You can follow one of the methods mentioned in this [Documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference).
+
+
 The cloud function does not have a network attached to it by default. The VPC network peering betweeen the meta function and the  hive metastore is possible if we have a subnetwork attached to the meta function.
 
 We can use a Serverless VPC Access connector to connect the cloud function directly to a Virtual Private Cloud (VPC) network, allowing access to cloud function with an internal IP address.
