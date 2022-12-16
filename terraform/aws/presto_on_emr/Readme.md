@@ -10,6 +10,9 @@ Amazon EMR Serverless is a new option in Amazon EMR that makes it easy and cost-
 
 
 ### Deployment
+-To use Terraform to manage and deploy resources and infrastructure to AWS, you will need to use the AWS provider. You must configure the provider with the proper credentials before you can use it. This provider is maintained internally by the HashiCorp AWS Provider team. You can follow one of the methods mentioned in this [document](https://spacelift.io/blog/terraform-aws-provider).
+
+
 Go to [presto](https://github.com/e6x-labs/e6-oss-community/tree/main/presto/aws/presto_emr/) folder and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 ### Variables
