@@ -13,10 +13,10 @@ To use Terraform to manage and deploy resources and infrastructure to GCP, you w
 
 Google Cloud VPC Network Peering connects two Virtual Private Cloud (VPC) networks so that resources in each network can communicate with each other:
 
-Go to [same_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/same_project)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
+Go to [basic_network_peering](https://github.com/e6x-labs/e6-oss-community/tree/serverless_gcp/terraform/gcp/network_peering/network_peering_basic)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 
-
+### Network peering between a VPC and a serverless VPC which is connected to cloud function
 
 The cloud function does not have a network attached to it by default. The VPC network peering betweeen the meta function and the  hive metastore is possible if we have a subnetwork attached to the meta function.
 
@@ -27,7 +27,7 @@ Use the below configs for GCP peering.
 
 ### Networks in same project
 
-Go to [same_project](https://github.com/e6x-labs/e6-oss-community/tree/main/terraform/gcp/network_peering/same_project)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
+Go to [network_peering_serverless](https://github.com/e6x-labs/e6-oss-community/tree/serverless_gcp/terraform/gcp/network_peering/network_peering_serverless)  and execute the [**Execution commands**](#execution-commands) after updating **tfvars.**
 
 
 ### terraform tfvars file
