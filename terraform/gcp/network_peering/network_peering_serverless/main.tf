@@ -1,16 +1,19 @@
 
 resource "google_vpc_access_connector" "connector" {
   count         = var.action == "destroy" ? 0 : 1
-  project       = var.project
+  provider      = google.destination
   name          = var.workspace_name
   network       = var.destination_network
   ip_cidr_range = var.serverless_subnet_cidr
 }
 data "google_cloudfunctions_function" "my-function" {
-  name = "e6data-${var.workspace_name}-meta"
+  provider = google.destination
+  name     = "e6data-${var.workspace_name}-meta"
 }
 
 resource "google_cloudfunctions_function" "meta-function" {
+  project               = var.destination_project
+  provider              = google.destination
   name                  = data.google_cloudfunctions_function.my-function.name
   runtime               = data.google_cloudfunctions_function.my-function.runtime
   entry_point           = data.google_cloudfunctions_function.my-function.entry_point
@@ -26,12 +29,12 @@ resource "google_cloudfunctions_function" "meta-function" {
 }
 
 data "google_compute_network" "source_network" {
-  project = var.project
-  name    = var.source_network
+  provider = google.source
+  name     = var.source_network
 }
 data "google_compute_network" "destination_network" {
-  project = var.project
-  name    = var.destination_network
+  provider = google.destination
+  name     = var.destination_network
 }
 resource "google_compute_network_peering" "source_to_destination" {
   count        = var.action == "destroy" ? 0 : 1
