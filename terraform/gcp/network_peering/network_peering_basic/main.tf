@@ -1,10 +1,10 @@
 data "google_compute_network" "source_network" {
-  project = var.source_project
-  name    = var.source_network
+  provider = google.source
+  name     = var.source_network
 }
 data "google_compute_network" "destination_network" {
-  project = var.destination_project
-  name    = var.destination_network
+  provider = google.destination
+  name     = var.destination_network
 }
 resource "google_compute_network_peering" "source_to_destination" {
   name         = "source-to-destination-peering"

@@ -14,3 +14,11 @@ variable "destination_project" {
   type        = string
   description = "the project id having destination network"
 }
+variable "source_region" {
+  type        = string
+  description = "GCP region"
+}
+variable "destination_region" {
+  type        = string
+  description = "GCP region"
+}
