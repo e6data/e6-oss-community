@@ -1,5 +1,6 @@
 import os
 import csv
+import traceback
 import warnings
 import logging
 from pathlib import Path
@@ -36,7 +37,7 @@ def get_data_setup_info_from_csv(schema_path) -> dict:
                 column_data = []
                 table_name = line.get('table_name')
                 column_data.append(str(line.get('partition_column')).replace('\"', '').replace(',', ', '))
-                column_data.append(line.get('sorting_column').replace('\"', '`').replace(',', ', '))
+                column_data.append(str(line.get('sorting_column')).replace('\"', '`').replace(',', ', '))
                 csv_data[table_name] = column_data
         logger.info(f"Successfully extracted data setup information from CSV")
         end_time = datetime.now()
@@ -96,6 +97,8 @@ def datetime_check(operation_time):
 
 
 def data_setup_function(csv_data):
+    successful_tables_list = []
+    failed_tables_list = {}
     for table_name, config in csv_data.items():
         try:
             total_operation_time = timedelta(seconds=0)
@@ -190,12 +193,18 @@ def data_setup_function(csv_data):
             logger.info("")
             logger.info(f"Successfully completed data setup for {table_name} Table")
             logger.info("")
+            successful_tables_list.append(table_name)
         except Exception as exception:
             logger.error(f"Error occurred during data setup for table {table_name}: {exception}")
+            full_exception = traceback.format_exception(type(exception), exception, exception.__traceback__)
+            failed_tables_list[table_name] = ''.join(full_exception).split(':')[2]
+    return successful_tables_list, failed_tables_list
 
 
 if __name__ == '__main__':
+    logger.info("")
     logger.info(f"Starting Data setup for Database {database_name}...")
+    data_setup_start = datetime.now()
     logger.info(f"Data setup csv path: {data_setup_csv_path}")
     spark = SparkSession.builder \
         .appName("DeltaTableOperations") \
@@ -209,8 +218,19 @@ if __name__ == '__main__':
     spark.conf.set("spark.databricks.delta.optimize.maxFileSize", 134217728)
     spark.conf.set("spark.sql.files.ignoreCorruptFiles", True)
     csv_content = get_data_setup_info_from_csv(data_setup_csv_path)
+    logger.info("")
     if csv_content:
-        data_setup_function(csv_content)
-        logger.info(f"Completed data setup successfully")
+        success_list, failed_list = data_setup_function(csv_content)
+        data_setup_end = datetime.now()
+        total_data_setup_time = (data_setup_end - data_setup_start).total_seconds()
+        logger.info("")
+        logger.info("******************************** SUMMARY OF DATA SETUP ******************************** ")
+        logger.info(f"Total tables considered for data setup: {len(success_list) + len(failed_list)}")
+        logger.info(f"Total number of successfully created tables: {len(success_list)}")
+        logger.info(f"List of Successfully created tables: {success_list}")
+        logger.info(f"Total number of failed tables: {len(failed_list)}")
+        logger.info(f"List of failed tables with exceptions: {failed_list}")
+        logger.info(f"******************* Total time taken {total_data_setup_time} seconds ********************")
+        logger.info("")
     else:
         logger.error("Data setup has been incomplete check error logs")
