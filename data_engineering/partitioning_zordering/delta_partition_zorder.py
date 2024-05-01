@@ -49,12 +49,12 @@ def get_data_setup_info_from_csv(schema_path) -> dict:
         return {}
 
 
-def partition_data(data, delta_table_path, partition_columns_list):
+def partition_data(data, delta_table_path, partition_columns_list, table_name, database_name):
     logger.info(f"Started Partitioning...")
-    data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true").option("overwriteSchema",
-                                                                                             "true").option(
-        "delta.columnMapping.mode", "name").partitionBy(
-        *partition_columns_list).save(delta_table_path)
+    data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true").option("overwriteSchema", "true") \
+        .option("delta.columnMapping.mode", "name").partitionBy(*partition_columns_list).option("path",
+                                                                                                delta_table_path) \
+        .saveAsTable(f"{database_name}.{table_name}")
     logger.info(f"Completed Partitioning and Delta table creation")
 
 
@@ -99,6 +99,16 @@ def datetime_check(operation_time):
 def data_setup_function(csv_data):
     successful_tables_list = []
     failed_tables_list = {}
+    try:
+        logger.info("")
+        logger.info(f"Started creating {database_name} database at {s3_database_delta_path}")
+        database_creation_ddl = f"CREATE DATABASE {database_name} LOCATION '{s3_database_delta_path}'"
+        spark.sql(database_creation_ddl)
+        logger.info(f"Successfully created {database_name} database")
+        spark.sql(f"USE {database_name}")
+    except Exception as exception:
+        logging.error(f"Error occurred during database creation: {exception}")
+
     for table_name, config in csv_data.items():
         try:
             total_operation_time = timedelta(seconds=0)
@@ -125,7 +135,7 @@ def data_setup_function(csv_data):
                 partitioning_start_time = datetime.now()
                 partition_columns_list = partition_columns.split(", ")
                 logger.info(f"partition columns list is {partition_columns_list}")
-                partition_data(data, delta_table_path, partition_columns_list)
+                partition_data(data, delta_table_path, partition_columns_list, table_name, database_name)
                 partitioning_end_time = datetime.now()
                 partition_table_creation_time = partitioning_end_time - partitioning_start_time
                 logger.info(f"Time taken for Partitioning and Delta table creation is {partition_table_creation_time}")
@@ -135,8 +145,9 @@ def data_setup_function(csv_data):
                 un_partitioning_creation_start_time = datetime.now()
                 logger.info(f"No Partitioning keys provided for table")
                 logger.info(f"Started creating Delta table without Partitioning")
-                data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true").option(
-                    "delta.columnMapping.mode", "name").save(delta_table_path)
+                data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true") \
+                    .option("delta.columnMapping.mode", "name").option("path", delta_table_path) \
+                    .saveAsTable(f"{database_name}.{table_name}")
                 logger.info(f"Completed creation of Delta table")
                 unpartitioning_creation_end_time = datetime.now()
                 unpartition_table_creation_time = unpartitioning_creation_end_time - un_partitioning_creation_start_time
@@ -211,8 +222,11 @@ if __name__ == '__main__':
         .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.1,io.delta:delta-spark_2.12:3.1.0") \
         .config("spark.sql.parquet.outputTimestampType", "TIMESTAMP_MICROS") \
         .config("spark.delta.logStore.class", "org.apache.spark.sql.delta.storage.S3SingleDriverLogStore") \
+        .config("spark.hadoop.hive.metastore.client.factory.class",
+                "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory") \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+        .enableHiveSupport() \
         .getOrCreate()
     spark.conf.set("spark.databricks.delta.optimize.minFileSize", 134217728)
     spark.conf.set("spark.databricks.delta.optimize.maxFileSize", 134217728)
@@ -226,10 +240,10 @@ if __name__ == '__main__':
         logger.info("")
         logger.info("******************************** SUMMARY OF DATA SETUP ******************************** ")
         logger.info(f"Total tables considered for data setup: {len(success_list) + len(failed_list)}")
-        logger.info(f"Total number of successfully created tables: {len(success_list)}")
-        logger.info(f"List of Successfully created tables: {success_list}")
-        logger.info(f"Total number of failed tables: {len(failed_list)}")
-        logger.info(f"List of failed tables with exceptions: {failed_list}")
+        logger.info(f"Total number of complete data setup tables: {len(success_list)}")
+        logger.info(f"List of complete data setup tables: {success_list}")
+        logger.info(f"Total number of failed/incomplete data setup tables: {len(failed_list)}")
+        logger.info(f"List of failed/incomplete data setup tables with exceptions: {failed_list}")
         logger.info(f"******************* Total time taken {total_data_setup_time} seconds ********************")
         logger.info("")
     else:
