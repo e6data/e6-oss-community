@@ -52,7 +52,7 @@ def get_data_setup_info_from_csv(schema_path) -> dict:
 def partition_data(data, delta_table_path, partition_columns_list, table_name, database_name):
     logger.info(f"Started Partitioning...")
     data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true").option("overwriteSchema", "true") \
-        .option("delta.columnMapping.mode", "name").partitionBy(*partition_columns_list).option("path",
+        .option("delta.columnMapping.mode", "name").option("delta.dataSkippingNumIndexedCols", "-1").partitionBy(*partition_columns_list).option("path",
                                                                                                 delta_table_path) \
         .saveAsTable(f"{database_name}.{table_name}")
     logger.info(f"Completed Partitioning and Delta table creation")
@@ -146,7 +146,7 @@ def data_setup_function(csv_data):
                 logger.info(f"No Partitioning keys provided for table")
                 logger.info(f"Started creating Delta table without Partitioning")
                 data.write.format("delta").mode("overwrite").option("ignoreCorruptFiles", "true") \
-                    .option("delta.columnMapping.mode", "name").option("path", delta_table_path) \
+                    .option("delta.columnMapping.mode", "name").option("delta.dataSkippingNumIndexedCols", "-1").option("path", delta_table_path) \
                     .saveAsTable(f"{database_name}.{table_name}")
                 logger.info(f"Completed creation of Delta table")
                 unpartitioning_creation_end_time = datetime.now()
