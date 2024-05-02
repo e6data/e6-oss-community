@@ -221,8 +221,6 @@ if __name__ == '__main__':
         .appName("DeltaTableOperations") \
         .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.1,io.delta:delta-spark_2.12:3.1.0") \
         .config("spark.sql.parquet.outputTimestampType", "TIMESTAMP_MICROS") \
-        .config("hive.metastore.client.factory.class",
-                "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory") \
         .config("spark.hadoop.hive.metastore.client.factory.class",
                 "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory") \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
