@@ -102,7 +102,7 @@ def data_setup_function(csv_data):
     try:
         logger.info("")
         logger.info(f"Started creating {database_name} database at {s3_database_delta_path}")
-        database_creation_ddl = f"CREATE DATABASE {database_name} LOCATION '{s3_database_delta_path}'"
+        database_creation_ddl = f"CREATE DATABASE IF NOT EXISTS {database_name} LOCATION '{s3_database_delta_path}'"
         spark.sql(database_creation_ddl)
         logger.info(f"Successfully created {database_name} database")
         spark.sql(f"USE {database_name}")
