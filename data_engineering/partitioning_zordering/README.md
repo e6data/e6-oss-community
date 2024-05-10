@@ -46,8 +46,9 @@ The sample CSV file contains information required for the automation script:
 ## Spark Submit Command
 Use the following Spark submit command to run the Automation Python script:
 
-> spark-submit --packages org.apache.hadoop:hadoop-aws:3.3.1,io.delta:delta-spark_2.12:3.1.0  --conf spark.sql.parquet.outputTimestampType=TIMESTAMP_MICROS --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" --conf "spark.hadoop.hive.metastore.client.factory.class=com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory" --conf "spark.log.level=WARN" <path-to-python-script>`
+> spark-submit --deploy-mode client --master yarn --executor-memory 216G --driver-memory 216G --num-executors 2 --executor-cores 30 --packages org.apache.hadoop:hadoop-aws:3.3.1,io.delta:delta-spark_2.12:3.1.0  --conf spark.sql.parquet.outputTimestampType=TIMESTAMP_MICROS --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" --conf "spark.hadoop.hive.metastore.client.factory.class=com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory" --conf "spark.log.level=WARN" <path-to-python-script>`
 
 Make sure to replace <path-to-python-script> with the actual path to your Python script.
+The executor and Driver memory configurations can be changed accordingly.
 
 For any queries or issues, please contact E6data.
