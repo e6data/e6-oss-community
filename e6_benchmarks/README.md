@@ -5,9 +5,19 @@ This Python script automates sequential and concurrency benchmarking.
 ## Prerequisites
 ### Packages Installation
 
-Before running the main script, ensure the required packages are installed using the *requirements.txt*.
+Make sure to install below dependencies and wheel before install e6data-python-connector.
 
-> pip install -r requirements.txt
+#### Amazon Linux / CentOS dependencies
+> yum install python3-devel gcc-c++ -y
+
+#### Ubuntu/Debian dependencies
+> apt install python3-dev g++ -y
+
+#### Pip dependencies
+> pip install wheel
+
+#### E6data python connector installation
+> pip install e6data-python-connector
 
 ## Environment Variables
 Set the following environment variables before running the automation scripts:
