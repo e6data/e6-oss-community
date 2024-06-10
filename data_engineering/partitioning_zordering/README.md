@@ -38,10 +38,10 @@ Set the following environment variables before running the automation scripts:
 ## Sample CSV File
 The sample CSV file contains information required for the automation script:
 
-| table_name | partition_column | sorting_column|
-|------------|------------------|---------------|
-| zenoti_unload| "center name","product sales" | "run date","id" |
-|zenoti_unload_2 | "agent_id" |
+| table_name      | partition_column              | sorting_column  |
+|-----------------|-------------------------------|-----------------|
+| zenoti_unload   | "center name","product sales" | "run date","id" |
+| zenoti_unload_2 | "agent_id"                    |
 
 ## Spark Submit Command
 Use the following Spark submit command to run the Automation Python script:
