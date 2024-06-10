@@ -229,7 +229,7 @@ def e6x_query_method(row):
 
 
 def s3_upload(result_file_path):
-    s3_folder_file_path = f"e6_benchmark_results/{database}/results.csv"
+    s3_folder_file_path = f"e6_benchmark_results/{database}/{datetime.datetime.now().date()}/results_{time.time()}.csv"
     s3_path = f"s3://{s3_bucket}/{s3_folder_file_path}"
     logger.info('TIMESTAMP {} Stated uploading result csv file to s3 folder...'.format(datetime.datetime.now()))
     s3 = boto3.resource('s3')
@@ -564,7 +564,7 @@ class E6XBenchmark():
     def _send_to_webclient(self, result):
         logger.info('TIMESTAMP {} Stated creating result csv file...'.format(datetime.datetime.now()))
         path = Path(__file__).resolve().parent
-        result_file_path = os.path.join(path, 'results.csv')
+        result_file_path = os.path.join(path, 'results_{}.csv'.format(datetime.datetime.now()))
         logger.info('TIMESTAMP {} Result local file path {}'.format(datetime.datetime.now(), result_file_path))
         if self.csv_flag != 1:
             with open(result_file_path, 'w', newline='') as fp:
